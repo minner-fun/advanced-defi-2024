@@ -79,8 +79,18 @@ contract UniswapV2LiquidityTest is Test {
         // Exercise - Remove liquidity from DAI / WETH pool
         // Write your code here
         // Don’t change any other code
-
+        (uint amountA, uint amountB) = router.removeLiquidity({
+        tokenA: WETH,
+        tokenB: DAI,
+        liquidity: liquidity,
+        amountAMin: 1,
+        amountBMin: 1,
+        to: user,
+        deadline: block.timestamp
+        }); 
         vm.stopPrank();
+        console2.log('DAI', amountA);
+        console2.log('WETH', amountB);
 
         assertEq(pair.balanceOf(user), 0, "LP = 0");
     }
