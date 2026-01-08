@@ -3,16 +3,15 @@ pragma solidity 0.8.24;
 
 import {Test, console2} from "forge-std/Test.sol";
 import {IERC20} from "../../../src/interfaces/IERC20.sol";
-import {IUniswapV2Router02} from
-    "../../../src/interfaces/uniswap-v2/IUniswapV2Router02.sol";
-import {IUniswapV2Pair} from
-    "../../../src/interfaces/uniswap-v2/IUniswapV2Pair.sol";
+import {IUniswapV2Router02} from "../../../src/interfaces/uniswap-v2/IUniswapV2Router02.sol";
+import {IUniswapV2Pair} from "../../../src/interfaces/uniswap-v2/IUniswapV2Pair.sol";
 import {
     DAI,
     WETH,
     UNISWAP_V2_ROUTER_02,
     UNISWAP_V2_PAIR_DAI_WETH
 } from "../../../src/Constants.sol";
+
 import {UniswapV2Twap} from "./UniswapV2Twap.sol";
 
 contract UniswapV2TwapTest is Test {
@@ -64,6 +63,8 @@ contract UniswapV2TwapTest is Test {
         twap.update();
 
         uint256 twap1 = twap.consult(WETH, 1e18);
+        console2.log("twap0", twap0);
+        console2.log("twap1", twap1);
 
         assertApproxEqAbs(twap0, twap1, 1, "ETH TWAP");
     }
@@ -88,8 +89,8 @@ contract UniswapV2TwapTest is Test {
         // Get TWAP
         uint256 twap1 = twap.consult(WETH, 1e18);
 
-        console2.log("twap0", twap0);
-        console2.log("twap1", twap1);
+        console2.log("twap0       : ", twap0);
+        console2.log("twap1       : ", twap1);
 
         // Check TWAP is close to last spot
         assertLt(twap1, twap0, "twap1 >= twap0");
