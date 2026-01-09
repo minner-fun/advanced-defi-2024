@@ -17,7 +17,7 @@ import {
 import {ERC20} from "../../../src/ERC20.sol";
 
 contract UniswapV2FactoryTest is Test {
-    IWETH private constant weth = IWETH(WETH);
+    // IWETH private constant weth = IWETH(WETH);
     IUniswapV2Factory private constant factory =
         IUniswapV2Factory(UNISWAP_V2_FACTORY);
 
