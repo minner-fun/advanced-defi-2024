@@ -18,16 +18,15 @@ contract UniswapV3SwapTest is Test {
 
     // Exercise 1
     // - Get price of WETH in terms of USDC and return price with 18 decimals
-    function test_spot_price_from_sqrtPriceX96() public {
+    function test_spot_price_from_sqrtPriceX96() public view {
         uint256 price = 0;
         IUniswapV3Pool.Slot0 memory slot0 = pool.slot0();
 
-        // Write your code here
-        // Don’t change any other code
 
         // sqrtPriceX96 * sqrtPriceX96 might overflow
         // So use FullMath.mulDiv to do uint256 * uint256 / uint256 without overflow
-
+        price = FullMath.mulDiv(slot0.sqrtPriceX96, slot0.sqrtPriceX96, Q96);
+        price = 1e12 * Q96/price * 1e18;
         assertGt(price, 0, "price = 0");
         console2.log("price %e", price);
     }

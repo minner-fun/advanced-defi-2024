@@ -1,6 +1,6 @@
 pragma solidity ^0.8.24;
 
-import {cosnole2, Text} from "forge/Test.sol";
+import {console2, Test} from "forge-std/Test.sol";
 
 import {IUniswapV2Router02} from "../../../src/interfaces/uniswap-v2/IUniswapV2Router02.sol";
 
@@ -13,13 +13,15 @@ import {
     UNISWAP_V2_ROUTER_02
 } from "../../../src/Constants.sol";
 
+import {IERC20} from "../../../src/interfaces/IERC20.sol";
 
-contract UniswapV2Swap2{
+
+contract UniswapV2Swap2 is Test{
 
     IUniswapV2Router02 router = IUniswapV2Router02(UNISWAP_V2_ROUTER_02);
-    ERC20 usdc = ERC20(USDC);
-    ERC20 dai = ERC20(DAI);
-    ERC20 mkr = ERC20(MKR);
+    IERC20 usdc = IERC20(USDC);
+    IERC20 dai = IERC20(DAI);
+    IERC20 mkr = IERC20(MKR);
 
     function setUp() public {
         
