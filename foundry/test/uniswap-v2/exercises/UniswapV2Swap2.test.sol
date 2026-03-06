@@ -2,7 +2,8 @@ pragma solidity ^0.8.24;
 
 import {console2, Test} from "forge-std/Test.sol";
 
-import {IUniswapV2Router02} from "../../../src/interfaces/uniswap-v2/IUniswapV2Router02.sol";
+import {IUniswapV2Router02} from
+    "../../../src/interfaces/uniswap-v2/IUniswapV2Router02.sol";
 
 import {
     MKR,
@@ -15,17 +16,13 @@ import {
 
 import {IERC20} from "../../../src/interfaces/IERC20.sol";
 
-
-contract UniswapV2Swap2 is Test{
-
+contract UniswapV2Swap2 is Test {
     IUniswapV2Router02 router = IUniswapV2Router02(UNISWAP_V2_ROUTER_02);
     IERC20 usdc = IERC20(USDC);
     IERC20 dai = IERC20(DAI);
     IERC20 mkr = IERC20(MKR);
 
-    function setUp() public {
-        
-    }
+    function setUp() public {}
 
     function test_swap() public {
         address[] memory path = new address[](3);
@@ -35,8 +32,5 @@ contract UniswapV2Swap2 is Test{
         path[2] = MKR;
 
         uint256[] memory amounts = router.getAmountsOut(1 * 18, path);
-
-
     }
-
 }

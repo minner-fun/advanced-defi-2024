@@ -32,23 +32,29 @@ contract UniswapV2Arb1 {
     function swap(SwapParams calldata params) external {
         // Write your code here
         // Don’t change any other code
-        IERC20(params.tokenIn).transferFrom(msg.sender, address(this), params.amountIn);
+        IERC20(params.tokenIn).transferFrom(
+            msg.sender, address(this), params.amountIn
+        );
         uint256 amountOut = _swap(params);
 
         if (amountOut - params.amountIn < params.minProfit) {
             revert InsufficientProfit();
         }
         IERC20(params.tokenIn).transfer(msg.sender, amountOut);
-
     }
-    function _swap(SwapParams memory params) private returns (uint256 amountOut) {
+
+    function _swap(SwapParams memory params)
+        private
+        returns (uint256 amountOut)
+    {
         IERC20(params.tokenIn).approve(address(params.router0), params.amountIn);
-    
+
         address[] memory path = new address[](2);
         path[0] = params.tokenIn;
         path[1] = params.tokenOut;
-    
-        uint256[] memory amounts = IUniswapV2Router02(params.router0).swapExactTokensForTokens({
+
+        uint256[] memory amounts = IUniswapV2Router02(params.router0)
+            .swapExactTokensForTokens({
             amountIn: params.amountIn,
             amountOutMin: 0,
             path: path,
@@ -60,7 +66,7 @@ contract UniswapV2Arb1 {
 
         path[0] = params.tokenOut;
         path[1] = params.tokenIn;
-    
+
         amounts = IUniswapV2Router02(params.router1).swapExactTokensForTokens({
             amountIn: amounts[1],
             amountOutMin: params.amountIn,
@@ -107,10 +113,10 @@ contract UniswapV2Arb1 {
         (address caller, address pair, SwapParams memory params) =
             abi.decode(data, (address, address, SwapParams));
         uint256 amountOut = _swap(params);
-    
+
         uint256 fee = ((params.amountIn * 3) / 997) + 1;
         uint256 amountToRepay = params.amountIn + fee;
-    
+
         uint256 profit = amountOut - amountToRepay;
         if (profit < params.minProfit) {
             revert InsufficientProfit();

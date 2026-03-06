@@ -54,7 +54,9 @@ contract UniswapV2SwapTest is Test {
         // Write your code here
         // Don’t change any other code
         vm.prank(user);
-        uint256[] memory amounts = router.swapExactTokensForTokens(amountIn, amountOutMin, path, user, block.timestamp);
+        uint256[] memory amounts = router.swapExactTokensForTokens(
+            amountIn, amountOutMin, path, user, block.timestamp
+        );
         console2.log("WETH", amounts[0]);
         console2.log("DAI", amounts[1]);
         console2.log("MKR", amounts[2]);
@@ -76,7 +78,9 @@ contract UniswapV2SwapTest is Test {
         // Write your code here
         // Don’t change any other code
         vm.prank(user);
-        uint256[] memory amounts = router.swapTokensForExactTokens(amountOut, amountInMax, path, user, block.timestamp);
+        uint256[] memory amounts = router.swapTokensForExactTokens(
+            amountOut, amountInMax, path, user, block.timestamp
+        );
         console2.log("WETH", amounts[0]);
         console2.log("DAI", amounts[1]);
         console2.log("MKR", amounts[2]);

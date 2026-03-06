@@ -43,7 +43,8 @@ contract UniswapV2Arb2 {
     ) external {
         // Write your code here
         // Don’t change any other code
-        (uint112 reserve0, uint112 reserve1,) = IUniswapV2Pair(pair0).getReserves();
+        (uint112 reserve0, uint112 reserve1,) =
+            IUniswapV2Pair(pair0).getReserves();
         // Hint - use getAmountOut to calculate amountOut to borrow
         uint256 amountOut = isZeroForOne
             ? getAmountOut(amountIn, reserve0, reserve1)
@@ -83,26 +84,26 @@ contract UniswapV2Arb2 {
         address token1 = IUniswapV2Pair(params.pair0).token1();
         (address tokenIn, address tokenOut) =
             params.isZeroForOne ? (token0, token1) : (token1, token0);
-    
+
         (uint112 reserve0, uint112 reserve1,) =
             IUniswapV2Pair(params.pair1).getReserves();
 
         uint256 amountOut = params.isZeroForOne
             ? getAmountOut(params.amountOut, reserve1, reserve0)
             : getAmountOut(params.amountOut, reserve0, reserve1);
-    
+
         IERC20(tokenOut).transfer(params.pair1, params.amountOut);
-    
+
         IUniswapV2Pair(params.pair1).swap({
             amount0Out: params.isZeroForOne ? amountOut : 0,
             amount1Out: params.isZeroForOne ? 0 : amountOut,
             to: address(this),
             data: ""
         });
-    
+
         // NOTE - no need to calculate flash swap fee
         IERC20(tokenIn).transfer(params.pair0, params.amountIn);
-    
+
         uint256 profit = amountOut - params.amountIn;
         if (profit < params.minProfit) {
             revert InsufficientProfit();
