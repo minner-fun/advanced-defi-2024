@@ -60,7 +60,6 @@ contract UniswapV3SwapTest is Test {
     // - Send WBTC from Uniswap V3 to this contract
     // NOTE: WBTC has 8 decimals
     function test_exactInput() public {
-
         // bytes memory path;
         uint256 amountOut = router.exactInput(
             ISwapRouter.ExactInputParams({
@@ -108,7 +107,6 @@ contract UniswapV3SwapTest is Test {
     // - Send WBTC from Uniswap V3 to this contract
     // NOTE: WBTC has 8 decimals
     function test_exactOutput() public {
-
         // bytes memory path;
         uint256 amountIn = router.exactOutput(
             ISwapRouter.ExactOutputParams({
